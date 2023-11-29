@@ -1,6 +1,6 @@
-# 范型类型推导
+## 范型类型推导
 
-### T param 推导
+### 1. T param 推导
 ```C++
 template<typename T>
 void f(T param) {
@@ -43,7 +43,7 @@ void test_f() {
     f(funcptr);        // T = void (*)(int, int)
 }
 ```
-### T *param 推导
+### 2. T *param 推导
 ```C++
 template<typename T>
 void f2(T *param) {
@@ -88,7 +88,7 @@ void test_f2() {
     f2(funcptr);        // T = void(int, int)
 }
 ```
-### const T *param 推导
+### 3. const T *param 推导
 ```C++
 template<typename T>
 void f2_2(const T *param) {
@@ -133,7 +133,7 @@ void test_f2_2() {
     f2_2(funcptr);        // 报错：函数指针没有底层const概念
 }
 ```
-### T &param 推导
+### 4. T &param 推导
 ```C++
 template<typename T>
 void f3(T &param) {
@@ -179,9 +179,9 @@ void test_f3() {
 }
 ```
 
-### T &&param 推导
+### 5. T &&param 推导 (万能引用)
 
-* 万能引用折叠 T &&
+* 引用折叠
 
 ```C++
 template<typename T>
