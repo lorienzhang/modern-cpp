@@ -99,7 +99,7 @@ int main() {
 2. 不能定义任何构造函数
 3. 没有基类，没有virtual函数
 
-## 让类支持列表初始化
+## 让类支持列表初始化 std::initializer_list<>
 ```C++
 struct A {
     A(int a, int b) {
