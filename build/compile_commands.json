@@ -1,7 +1,0 @@
-[
-{
-  "directory": "/Users/zhanghao43/android/github/modern-cpp/build",
-  "command": "/usr/bin/clang++    -fno-elide-constructors -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.1.sdk -std=gnu++11 -o CMakeFiles/item7.dir/item7/item7.cpp.o -c /Users/zhanghao43/android/github/modern-cpp/item7/item7.cpp",
-  "file": "/Users/zhanghao43/android/github/modern-cpp/item7/item7.cpp"
-}
-]
