@@ -83,4 +83,4 @@ struct myVector2<float>
     WinType type;
 };
 ```
-myVector2<T>::type就会有歧义
+myVector2\<T\>::type就会有歧义
