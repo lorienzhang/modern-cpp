@@ -10,4 +10,4 @@
 
 ## [item23: 理解std::move和std::forward](./item23/README.md)
 
-## [item3: 理解decltype](./item23/README.md)
+## [item3: 理解decltype](./item3/README.md)
