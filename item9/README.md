@@ -49,7 +49,7 @@ int main() {
 
 ```
 
-不会像typedef那样，用::带来有歧义，using没有歧义
+不会像typedef那样，用::带来歧义，using没有歧义
 
 ```C++
 template <typename T>
