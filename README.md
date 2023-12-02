@@ -12,4 +12,4 @@
 
 ## [item3: 理解decltype](./item3/README.md)
 
-## [base4: C++类对象内存布局](./item4/README.md)
+## [base4: C++类对象内存布局](./base4/README.md)
