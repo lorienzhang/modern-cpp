@@ -3,20 +3,14 @@
 ## 一、 static_cast
 ### 1. 基本内置类型转换
 ```C++
-void test_static_cast() {
-    // 1
-    float f = 10.f;
-    int i = static_cast<int>(f);
-}
+float f = 10.f;
+int i = static_cast<int>(f);
 ```
 ### 2. 任意类型的指针转换都可以用void *做媒介中转
 ```C++
-void test_static_cast() {
-    // 2
-    A a;
-    void *vpa = static_cast<void *>(&a);
-    int *pi = static_cast<int *>(vpa);
-}
+A a;
+void *vpa = static_cast<void *>(&a);
+int *pi = static_cast<int *>(vpa);
 ```
 ### 3. 存在继承关系的类且没有多态之间类型转换
 1. 上行(子 -> 父), 可以
@@ -25,18 +19,19 @@ void test_static_cast() {
 从内存布局角度分析，这点很好理解
 
 ### 4. 存在继承关系的类，指针/引用之间的转换：随便转，上下行都不限制，但下行不安全
-这种情况安全的转换，请使用dynamic_cast
+下行不安全，但编译器不限制。如果想要安全的转换，请使用dynamic_cast
 
 ## 二、 dynamic_cast
 * 动态类型转换，通过虚表中type_info动态判断。转换失败返回nullptr；
 * 一般用于将基类指针安全的转换到其派生类的指针类型
 
 ## 三、 const_cast
-去掉底层const
+示例：
 ```C++
 const char *pc = "hello";
 // 去掉const
 char *p = const_cast<char *>(pc);
+// 增加const
 const char *p1 = const_cast<const char *>p;
 ```
 
