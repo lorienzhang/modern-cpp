@@ -15,3 +15,5 @@
 # [base4: C++类对象内存布局](./base4/README.md)
 
 # [base5: C++多态与RTTI](./base5/README.md)
+
+# [base6: 类型转换](./base6/README.md)

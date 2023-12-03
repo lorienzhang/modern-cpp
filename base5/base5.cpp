@@ -107,13 +107,19 @@ int main() {
     // A *base = new B();
     // test(base);
 
-    B b;
-    A *a = &b;
-    A *mm = dynamic_cast<A *>(&b);  // 成功
-    B *nn = dynamic_cast<B *>(mm);  // 成功
+    // B b;
+    // A *a = &b;
+    // A *mm = dynamic_cast<A *>(&b);  // 成功
+    // B *nn = dynamic_cast<B *>(mm);  // 成功
 
-    A a2;
-    B *b2 = dynamic_cast<B *>(&a2); // 失败，b2是nullptr
+    // A a2;
+    // B *b2 = dynamic_cast<B *>(&a2); // 失败，b2是nullptr
+
+    B b;
+    B *pb = &b;
+    A *a = static_cast<A *>(pb);
+    pb =  static_cast<B *>(a);
+    a->vAfunc1();
 
     return 0;
 }
