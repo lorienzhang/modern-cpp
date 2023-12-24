@@ -20,66 +20,30 @@ public:
     }
 
     // 拷贝构造，属于构建一个新的对象
-    Buffer(const Buffer &buffer) {
+    Buffer(const Buffer &buffer) : _capacity(buffer._capacity), 
+                                    _length(buffer._length), 
+                                    _buf(_capacity ?  new unsigned char[_capacity] : nullptr)  {
         std::cout << "Buffer(const Buffer &buffer)";
-
-        this->_capacity = buffer._capacity;
-        this->_length = buffer._length;
-        this->_buf = new unsigned char[buffer._capacity];
-        std::copy(buffer._buf, buffer._buf + buffer._capacity, this->_buf);
-
         std::cout << *this << std::endl;
+
+        std::copy(buffer._buf, buffer._buf + buffer._capacity, this->_buf);
     }
 
     // 移动构造
-    Buffer(Buffer &&buffer) {
+    // 这里先通过Buffer(0)构造一个空的buffer，然后将buffer的内容交换到this中
+    Buffer(Buffer &&buffer) : Buffer(0) {
         std::cout << "Buffer(Buffer &&buffer)";
-
-        this->_capacity = buffer._capacity;
-        this->_length = buffer._length;
-        this->_buf = buffer._buf;
-
-        std::cout << *this << std::endl;
-
-        // 清空右值资源
-        buffer._buf = nullptr;
-        buffer._capacity = 0;
-        buffer._length = 0;
+        swap(buffer, *this);
     }
 
     // 拷贝赋值，对象已存在
-    Buffer &operator=(const Buffer &buffer) {
+    // 要实现swap，入参得是Buffer buffer
+    //   1. 如果传入是左值，那么通过拷贝构造 构造buffer
+    //   2. 如果传入是右值，那么通过移动构造 构造buffer，一般编译器优化，移动构造也不会调。
+    Buffer &operator=(Buffer buffer) {
         std::cout << "Buffer &operator=(const Buffer &buffer)";
 
-        // 先判断：赋值运算符=的左右不一样
-        if (this != &buffer) {
-            // 先清空=左边的资源，否则内存泄漏
-            delete[] this->_buf;
-            // 重新开辟空间
-            this->_buf = new unsigned char[buffer._capacity];
-            this->_capacity = buffer._capacity;
-            this->_length = buffer._length;
-            std::copy(buffer._buf, buffer._buf + buffer._capacity, this->_buf);
-        }
-
-        std::cout << *this << std::endl;
-        return *this;
-    }
-
-    // 移动赋值
-    Buffer &operator=(Buffer &&buffer) {
-        std::cout << "Buffer &operator=(Buffer &&buffer)";
-        // 先判断：赋值运算符=的左右不一样
-        if (this != &buffer) {
-            this->_capacity = buffer._capacity;
-            this->_length = buffer._length;
-            delete[] this->_buf;
-            this->_buf = buffer._buf;
-
-            buffer._buf = nullptr;
-            buffer._capacity = 0;
-            buffer._length = 0;
-        }
+        swap(buffer, *this);
 
         std::cout << *this << std::endl;
         return *this;
