@@ -266,6 +266,6 @@ copy constructor(0/10)[0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 
 要点：
 1. &operator=(Buffer buffer)，拷贝赋值运算符入参变成值传递。如果传入是左值，那么通过拷贝构造 构造buffer；如果传入是右值，那么通过移动构造 构造buffer，一般编译器优化，移动构造也不会调。
-2. Buffer(Buffer &&buffer)，移动构造需要先创建this对象，即： Buffer(0)
-3. copy&swap的优势：省去了移动赋值运算符函数；this和buffer相等判断的代码也省了，代码整体更加简洁。
+2. Buffer(Buffer &&buffer)，移动构造需要先创建this对象，即： Buffer(0)，然后函数里无情swap即可。
+3. copy&swap的优势：省去了移动赋值运算符函数；this和&buffer相等判断的代码也省了，代码整体更加简洁。
 3. swap实现（ADL：argument-dependent lookup）函数名要和标准库相同，编译器会根据参数类型优先使用最匹配函数。using std::swap;作为fallback存在
