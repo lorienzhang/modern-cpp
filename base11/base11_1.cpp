@@ -1,5 +1,9 @@
 #include "iostream"
 #include <algorithm>
+#include <vector>
+
+using std::cout;
+using std::endl;
 
 class Buffer
 {
@@ -10,21 +14,30 @@ private:
 
 public:
     explicit Buffer(int capacity) : _capacity(capacity), _length(0) {
-        std::cout << "Buffer(int capacity)" << std::endl;
-        _buf = (capacity == 0) ? nullptr : new unsigned char[capacity];
+        _buf = (capacity == 0) ? nullptr : new unsigned char[capacity]{};
+        cout << "constructor: " << *this << endl;
     }
 
     ~Buffer() {
-        std::cout << "~Buffer()" << std::endl;
+        std::cout << "~Buffer(): " << *this << std::endl;
         delete _buf;
+    }
+
+    friend void swap(Buffer &lhs, Buffer &rhs) {
+        // 用标准库里面的swap兜底
+        using std::swap;    // ADL: argument-dependent lookup
+
+        // 优先找自己定义的，如果找不到，就用标准库的swap
+        swap(lhs._buf, rhs._buf);
+        swap(lhs._capacity, rhs._capacity);
+        swap(lhs._length, rhs._length);
     }
 
     // 拷贝构造，属于构建一个新的对象
     Buffer(const Buffer &buffer) : _capacity(buffer._capacity), 
                                     _length(buffer._length), 
-                                    _buf(_capacity ?  new unsigned char[_capacity] : nullptr)  {
-        std::cout << "Buffer(const Buffer &buffer)";
-        std::cout << *this << std::endl;
+                                    _buf(buffer._capacity ?  new unsigned char[buffer._capacity]{} : nullptr)  {
+        std::cout << "copy constructor" << *this << std::endl;
 
         std::copy(buffer._buf, buffer._buf + buffer._capacity, this->_buf);
     }
@@ -32,7 +45,7 @@ public:
     // 移动构造
     // 这里先通过Buffer(0)构造一个空的buffer，然后将buffer的内容交换到this中
     Buffer(Buffer &&buffer) : Buffer(0) {
-        std::cout << "Buffer(Buffer &&buffer)";
+        std::cout << "move construnctor: " << *this << std::endl;;
         swap(buffer, *this);
     }
 
@@ -41,11 +54,10 @@ public:
     //   1. 如果传入是左值，那么通过拷贝构造 构造buffer
     //   2. 如果传入是右值，那么通过移动构造 构造buffer，一般编译器优化，移动构造也不会调。
     Buffer &operator=(Buffer buffer) {
-        std::cout << "Buffer &operator=(const Buffer &buffer)";
+        std::cout << "copy assign: " << buffer << std::endl;;
 
         swap(buffer, *this);
 
-        std::cout << *this << std::endl;
         return *this;
     }
 
@@ -83,5 +95,10 @@ int main() {
     // 拷贝赋值运算符
     buffer3 = buffer;
 
+    cout << "------------------------" << endl;
+
+    auto buffers = std::vector<Buffer>();
+    buffers.push_back(Buffer(10));
+    buffers.push_back(Buffer(5));
     return 0;
 }
